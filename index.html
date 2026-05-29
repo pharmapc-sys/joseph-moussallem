@@ -222,26 +222,42 @@
       <div class="contact-card">
         <h2>Travaillons ensemble</h2>
         <p>Disponible pour des missions IT, sociales, audiovisuelles ou de formation. Contactez-moi pour discuter de vos besoins.</p>
-        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" id="form" novalidate>
           <input type="hidden" name="access_key" value="57de7660-0e73-44f6-afdf-e7d5266bf4f2">
           <input type="hidden" name="subject" value="Nouveau message depuis votre site carte de visite">
           <input type="hidden" name="redirect" value="https://pharmapc-sys.github.io/joseph-moussallem/#contact">
-          <div class="form-group">
-            <input type="text" name="name" placeholder="Nom &amp; Prénom" required>
+          <input type="checkbox" name="botcheck" style="display:none">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nom &amp; Prénom</label>
+              <input type="text" name="name" id="name" placeholder="Votre nom" required>
+              <div class="invalid-feedback">Veuillez entrer votre nom.</div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" placeholder="vous@email.com" required>
+              <div class="invalid-feedback">Veuillez entrer un email valide.</div>
+            </div>
           </div>
-          <div class="form-group">
-            <input type="email" name="email" placeholder="Adresse email" required>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Téléphone</label>
+              <input type="tel" name="phone" id="phone" placeholder="07 XX XX XX XX">
+            </div>
+            <div class="form-group">
+              <label for="sujet">Sujet</label>
+              <input type="text" name="sujet" id="sujet" placeholder="Sujet de votre message">
+            </div>
           </div>
+
           <div class="form-group">
-            <input type="tel" name="phone" placeholder="Téléphone (optionnel)">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="5" placeholder="Votre message..." required></textarea>
+            <div class="invalid-feedback">Veuillez entrer votre message.</div>
           </div>
-          <div class="form-group">
-            <input type="text" name="sujet" placeholder="Sujet">
-          </div>
-          <div class="form-group">
-            <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
-          </div>
-          <input type="hidden" name="from_name" value="Formulaire site carte de visite">
+
           <button type="submit" class="btn-primary btn-large">
             <i class="fas fa-paper-plane"></i> Envoyer le message
           </button>

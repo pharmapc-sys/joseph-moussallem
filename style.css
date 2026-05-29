@@ -559,17 +559,32 @@ body {
   text-align: left;
 }
 
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
 .form-group {
   margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ccc;
+  margin-bottom: 0.4rem;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 1rem 1.2rem;
+  padding: 0.85rem 1.1rem;
   background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 12px;
+  border: 2px solid #2a2a2a;
+  border-radius: 10px;
   color: #fff;
   font-size: 0.95rem;
   font-family: inherit;
@@ -593,10 +608,29 @@ body {
   min-height: 120px;
 }
 
+.invalid-feedback {
+  display: none;
+  color: #f87171;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.contact-form input:invalid:not(:placeholder-shown) ~ .invalid-feedback,
+.contact-form textarea:invalid:not(:placeholder-shown) ~ .invalid-feedback {
+  display: block;
+}
+
+.contact-form input:invalid:not(:placeholder-shown),
+.contact-form textarea:invalid:not(:placeholder-shown) {
+  border-color: #f87171;
+}
+
 .contact-form .btn-large {
   width: 100%;
   justify-content: center;
   margin-top: 0.5rem;
+  padding: 1rem;
+  font-size: 1.05rem;
 }
 
 .contact-methods {
