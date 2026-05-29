@@ -222,10 +222,9 @@
       <div class="contact-card">
         <h2>Travaillons ensemble</h2>
         <p>Disponible pour des missions IT, sociales, audiovisuelles ou de formation. Contactez-moi pour discuter de vos besoins.</p>
-        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" id="form" novalidate>
+        <form class="contact-form needs-validation" action="https://api.web3forms.com/submit" method="POST" id="form" novalidate>
           <input type="hidden" name="access_key" value="57de7660-0e73-44f6-afdf-e7d5266bf4f2">
           <input type="hidden" name="subject" value="Nouveau message depuis votre site carte de visite">
-          <input type="hidden" name="redirect" value="https://pharmapc-sys.github.io/joseph-moussallem/#contact">
           <input type="checkbox" name="botcheck" style="display:none">
 
           <div class="form-row">
@@ -261,6 +260,7 @@
           <button type="submit" class="btn-primary btn-large">
             <i class="fas fa-paper-plane"></i> Envoyer le message
           </button>
+          <p class="form-result" id="result"></p>
         </form>
         <div class="contact-methods">
           <a href="tel:+33783743183" class="contact-method">
@@ -291,7 +291,56 @@
     </div>
   </footer>
 
-
+<script>
+(function() {
+  "use strict";
+  const forms = document.querySelectorAll(".needs-validation");
+  const result = document.getElementById("result");
+  Array.prototype.slice.call(forms).forEach(function(form) {
+    form.addEventListener("submit", function(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.querySelectorAll(":invalid")[0].focus();
+      } else {
+        const formData = new FormData(form);
+        event.preventDefault();
+        event.stopPropagation();
+        const object = {};
+        formData.forEach((value, key) => { object[key] = value; });
+        const json = JSON.stringify(object);
+        result.innerHTML = "Envoi en cours...";
+        result.className = "form-result";
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: json
+        })
+        .then(async (response) => {
+          let json = await response.json();
+          if (response.status == 200) {
+            result.innerHTML = "&#10003; " + json.message;
+            result.className = "form-result success";
+          } else {
+            result.innerHTML = "&#10007; " + json.message;
+            result.className = "form-result error";
+          }
+        })
+        .catch(function() {
+          result.innerHTML = "&#10007; Une erreur est survenue. Envoyez un email à joseph@moussallem.fr";
+          result.className = "form-result error";
+        })
+        .then(function() {
+          form.reset();
+          form.classList.remove("was-validated");
+          setTimeout(function() { result.style.display = "none"; }, 6000);
+        });
+      }
+      form.classList.add("was-validated");
+    }, false);
+  });
+})();
+</script>
 
 </body>
 </html>

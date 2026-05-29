@@ -615,14 +615,19 @@ body {
   margin-top: 0.3rem;
 }
 
-.contact-form input:invalid:not(:placeholder-shown) ~ .invalid-feedback,
-.contact-form textarea:invalid:not(:placeholder-shown) ~ .invalid-feedback {
+.was-validated .form-group input:invalid,
+.was-validated .form-group textarea:invalid {
+  border-color: #f87171;
+}
+
+.was-validated .form-group input:invalid ~ .invalid-feedback,
+.was-validated .form-group textarea:invalid ~ .invalid-feedback {
   display: block;
 }
 
-.contact-form input:invalid:not(:placeholder-shown),
-.contact-form textarea:invalid:not(:placeholder-shown) {
-  border-color: #f87171;
+.was-validated .form-group input:valid,
+.was-validated .form-group textarea:valid {
+  border-color: #4ade80;
 }
 
 .contact-form .btn-large {
@@ -631,6 +636,21 @@ body {
   margin-top: 0.5rem;
   padding: 1rem;
   font-size: 1.05rem;
+}
+
+.form-result {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-result.success {
+  color: #4ade80;
+}
+
+.form-result.error {
+  color: #f87171;
 }
 
 .contact-methods {
