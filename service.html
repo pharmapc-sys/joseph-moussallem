@@ -258,8 +258,9 @@
       const prenom = document.getElementById('bkPrenom').value.trim();
       const nom = document.getElementById('bkNom').value.trim();
       const email = document.getElementById('bkEmail').value.trim();
+      const tel = document.getElementById('bkTel').value.trim();
       const dateOk = bookingState.dateIdx >= 0 && bookingState.slotIdx >= 0;
-      const formOk = prenom.length > 0 && nom.length > 0 && email.length > 0 && email.includes('@');
+      const formOk = prenom.length > 0 && nom.length > 0 && email.length > 0 && email.includes('@') && tel.length > 0;
       document.getElementById('bookingBtn').disabled = !(dateOk && formOk);
     }
 
@@ -270,7 +271,7 @@
       const tel = document.getElementById('bkTel').value.trim();
       const error = document.getElementById('bookingError');
 
-      if (!prenom || !nom || !email || !email.includes('@')) {
+      if (!prenom || !nom || !email || !email.includes('@') || !tel) {
         error.textContent = 'Veuillez remplir tous les champs obligatoires.';
         error.style.display = 'block';
         return;
@@ -293,8 +294,8 @@
           subject: 'Nouvelle réservation écoute & soutien',
           from_name: prenom + ' ' + nom,
           email: email,
-          telephone: tel || 'Non renseigné',
-          message: 'Réservation pour le service Écoute & Soutien.\nDate: ' + dateStr + '\nCréneau: ' + slotStr + '\nPrénom: ' + prenom + '\nNom: ' + nom + '\nEmail: ' + email + '\nTéléphone: ' + (tel || 'Non renseigné')
+          telephone: tel,
+          message: 'Réservation pour le service Écoute & Soutien.\nDate: ' + dateStr + '\nCréneau: ' + slotStr + '\nPrénom: ' + prenom + '\nNom: ' + nom + '\nEmail: ' + email + '\nTéléphone: ' + tel
         })
       }).then(function() {
         document.getElementById('bookingSuccess').style.display = 'block';
@@ -304,7 +305,7 @@
       }).catch(function() {
         document.getElementById('bookingBtn').disabled = false;
         document.getElementById('bookingBtn').innerHTML = '<i class="fas fa-lock"></i> Réserver et payer 25 €';
-        error.textContent = 'Erreur d\'envoi. Réessaie ou utilise le bouton "Payer par carte".';
+        error.textContent = 'Erreur d\'envoi. Réessaie ou contacte-nous directement.';
         error.style.display = 'block';
       });
     }
@@ -318,7 +319,9 @@
       svc.full.forEach(function(item) { html += '<li>' + item + '</li>'; });
       html += '</ul>';
       html += '<div class="detail-pourqui"><strong>Pour qui ?</strong> ' + svc.pourqui + '</div>';
-      html += '<a href="index.html#contact" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-paper-plane"></i> Demander un devis</a>';
+      if (slug !== 'ecoute') {
+        html += '<a href="index.html#contact" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-paper-plane"></i> Demander un devis</a>';
+      }
 
       if (slug === 'ecoute') {
         html += '<div class="booking-divider"></div>';
@@ -332,7 +335,7 @@
         html += '<input type="text" id="bkPrenom" placeholder="Prénom *" oninput="validateBooking()">';
         html += '<input type="text" id="bkNom" placeholder="Nom *" oninput="validateBooking()">';
         html += '<input type="email" id="bkEmail" placeholder="Email *" oninput="validateBooking()">';
-        html += '<input type="tel" id="bkTel" placeholder="Téléphone (optionnel)">';
+        html += '<input type="tel" id="bkTel" placeholder="Téléphone *" oninput="validateBooking()">';
         html += '<div class="booking-error" id="bookingError"></div>';
         html += '<button class="booking-btn" id="bookingBtn" onclick="reserverEtPayer()" disabled><i class="fas fa-lock"></i> Réserver et payer 25 €</button>';
         html += '<div class="booking-success" id="bookingSuccess"><i class="fas fa-check-circle"></i> Réservation envoyée ! Redirection vers le paiement...</div>';
