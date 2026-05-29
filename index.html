@@ -294,56 +294,69 @@
     </div>
   </footer>
 
-<script>
-(function() {
-  "use strict";
-  const forms = document.querySelectorAll(".needs-validation");
-  const result = document.getElementById("result");
-  Array.prototype.slice.call(forms).forEach(function(form) {
-    form.addEventListener("submit", function(event) {
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-        form.querySelectorAll(":invalid")[0].focus();
-      } else {
-        const formData = new FormData(form);
-        event.preventDefault();
-        event.stopPropagation();
-        const object = {};
-        formData.forEach((value, key) => { object[key] = value; });
-        const json = JSON.stringify(object);
-        result.innerHTML = "Envoi en cours...";
-        result.className = "form-result";
-        fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: json
-        })
-        .then(async (response) => {
-          let json = await response.json();
-          if (response.status == 200) {
-            result.innerHTML = "&#10003; " + json.message;
-            result.className = "form-result success";
-          } else {
-            result.innerHTML = "&#10007; " + json.message;
+  <!-- Tawk.to -->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/67b1e19db2e90f1915105d8e/1ik7dik8o';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+
+  <script>
+  (function() {
+    "use strict";
+    const forms = document.querySelectorAll(".needs-validation");
+    const result = document.getElementById("result");
+    Array.prototype.slice.call(forms).forEach(function(form) {
+      form.addEventListener("submit", function(event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          form.querySelectorAll(":invalid")[0].focus();
+        } else {
+          const formData = new FormData(form);
+          event.preventDefault();
+          event.stopPropagation();
+          const object = {};
+          formData.forEach((value, key) => { object[key] = value; });
+          const json = JSON.stringify(object);
+          result.innerHTML = "Envoi en cours...";
+          result.className = "form-result";
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: json
+          })
+          .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+              result.innerHTML = "&#10003; " + json.message;
+              result.className = "form-result success";
+            } else {
+              result.innerHTML = "&#10007; " + json.message;
+              result.className = "form-result error";
+            }
+          })
+          .catch(function() {
+            result.innerHTML = "&#10007; Une erreur est survenue. Envoyez un email à joseph@moussallem.fr";
             result.className = "form-result error";
-          }
-        })
-        .catch(function() {
-          result.innerHTML = "&#10007; Une erreur est survenue. Envoyez un email à joseph@moussallem.fr";
-          result.className = "form-result error";
-        })
-        .then(function() {
-          form.reset();
-          form.classList.remove("was-validated");
-          setTimeout(function() { result.style.display = "none"; }, 6000);
-        });
-      }
-      form.classList.add("was-validated");
-    }, false);
-  });
-})();
-</script>
+          })
+          .then(function() {
+            form.reset();
+            form.classList.remove("was-validated");
+            setTimeout(function() { result.style.display = "none"; }, 6000);
+          });
+        }
+        form.classList.add("was-validated");
+      }, false);
+    });
+  })();
+  </script>
 
 </body>
 </html>
