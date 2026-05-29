@@ -21,6 +21,33 @@
     .detail-card ul li::before { content: "✓"; position: absolute; left: 0; color: #ffd700; font-weight: bold; }
     .detail-pourqui { background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.1); border-radius: 12px; padding: 1rem 1.25rem; color: #bbb; font-size: 0.95rem; margin-bottom: 2rem; }
     .detail-pourqui strong { color: #ffd700; }
+
+    .booking-divider { height: 1px; background: rgba(255,215,0,0.15); margin: 2.5rem 0 2rem; }
+    .booking-title { font-size: 1.3rem; font-weight: 700; color: #ffd700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem; }
+    .booking-dates { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 1rem; scrollbar-width: thin; scrollbar-color: rgba(255,215,0,0.2) transparent; }
+    .booking-dates::-webkit-scrollbar { height: 4px; }
+    .booking-dates::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 4px; }
+    .date-card { flex-shrink: 0; width: 68px; padding: 0.6rem 0; border-radius: 12px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.06); text-align: center; cursor: pointer; transition: all 0.2s; }
+    .date-card:hover { border-color: rgba(255,215,0,0.3); background: #222; }
+    .date-card.active { background: #ffd700; border-color: #ffd700; }
+    .date-card.active .date-day { color: #0a0a0a; }
+    .date-card.active .date-num { color: #0a0a0a; font-weight: 800; }
+    .date-card .date-day { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+    .date-card .date-num { font-size: 1.2rem; color: #ddd; font-weight: 700; line-height: 1.3; }
+    .date-card .date-month { font-size: 0.65rem; color: #888; }
+    .booking-slots { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .slot-btn { padding: 0.5rem 1.2rem; border-radius: 10px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.06); color: #ccc; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+    .slot-btn:hover { border-color: rgba(255,215,0,0.3); background: #222; }
+    .slot-btn.active { background: #ffd700; border-color: #ffd700; color: #0a0a0a; font-weight: 700; }
+    .booking-form { display: flex; flex-direction: column; gap: 0.75rem; }
+    .booking-form input { padding: 0.85rem 1rem; border-radius: 12px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); color: #fff; font-size: 0.95rem; outline: none; transition: border 0.2s; }
+    .booking-form input:focus { border-color: #ffd700; }
+    .booking-form input::placeholder { color: #666; }
+    .booking-btn { padding: 0.85rem 2rem; border-radius: 50px; background: #ffd700; color: #0a0a0a; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: opacity 0.2s; }
+    .booking-btn:hover { opacity: 0.9; }
+    .booking-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .booking-error { color: #ff4444; font-size: 0.85rem; display: none; }
+    .booking-success { color: #4caf50; font-size: 0.95rem; display: none; text-align: center; padding: 1rem; background: rgba(76,175,80,0.1); border-radius: 12px; }
   </style>
 </head>
 <body>
@@ -183,9 +210,139 @@
       html += '<a href="index.html#contact" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-paper-plane"></i> Demander un devis</a>';
 
       if (slug === 'ecoute') {
-        html += '<div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;"><a href="https://buy.stripe.com/fZu3cxeeU6ls0ll1STasg03" class="btn-primary" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-credit-card"></i> Payer par carte</a><a href="https://calendly.com/pharmapc/30min" class="btn-primary" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:#ffd700;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;border:2px solid #ffd700;"><i class="fas fa-calendar-check"></i> Réserver un créneau</a></div>';
+        html += '<div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;"><a href="https://buy.stripe.com/fZu3cxeeU6ls0ll1STasg03" class="btn-primary" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-credit-card"></i> Payer par carte</a></div>';
+
+        html += '<div class="booking-divider"></div>';
+        html += '<div class="booking-title"><i class="fas fa-calendar-alt"></i> Réserver une session d\'écoute</div>';
+        html += '<div style="color:#888;font-size:0.9rem;margin-bottom:1rem;">Sélectionne une date et un créneau, puis remplis le formulaire.</div>';
+
+        html += '<div class="booking-dates" id="bookingDates"></div>';
+        html += '<div class="booking-slots" id="bookingSlots"></div>';
+
+        html += '<div class="booking-form">';
+        html += '<input type="text" id="bkPrenom" placeholder="Prénom *" oninput="validateBooking()">';
+        html += '<input type="text" id="bkNom" placeholder="Nom *" oninput="validateBooking()">';
+        html += '<input type="email" id="bkEmail" placeholder="Email *" oninput="validateBooking()">';
+        html += '<input type="tel" id="bkTel" placeholder="Téléphone (optionnel)">';
+        html += '<div class="booking-error" id="bookingError"></div>';
+        html += '<button class="booking-btn" id="bookingBtn" onclick="reserverEtPayer()" disabled><i class="fas fa-lock"></i> Réserver et payer 25 €</button>';
+        html += '<div class="booking-success" id="bookingSuccess"><i class="fas fa-check-circle"></i> Réservation envoyée ! Redirection vers le paiement...</div>';
+        html += '</div>';
       }
       document.getElementById('detailCard').innerHTML = html;
+
+      if (slug === 'ecoute') initBooking();
+    }
+
+    let bookingState = { dateIdx: -1, slotIdx: -1, dates: [], slots: [] };
+
+    function initBooking() {
+      const days = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+      const months = ['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
+      bookingState.dates = [];
+      const today = new Date();
+      for (let i = 0; i < 21; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() + i);
+        if (d.getDay() === 0) continue;
+        bookingState.dates.push(d);
+      }
+      bookingState.slots = ['9:00','9:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
+      renderDates();
+      selectDate(0);
+    }
+
+    function renderDates() {
+      const days = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+      const months = ['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'];
+      let h = '';
+      bookingState.dates.forEach(function(d, i) {
+        h += '<div class="date-card' + (i === bookingState.dateIdx ? ' active' : '') + '" onclick="selectDate(' + i + ')">';
+        h += '<div class="date-day">' + days[d.getDay()] + '</div>';
+        h += '<div class="date-num">' + d.getDate() + '</div>';
+        h += '<div class="date-month">' + months[d.getMonth()] + '</div>';
+        h += '</div>';
+      });
+      document.getElementById('bookingDates').innerHTML = h;
+    }
+
+    function selectDate(idx) {
+      bookingState.dateIdx = idx;
+      bookingState.slotIdx = -1;
+      renderDates();
+      renderSlots();
+      validateBooking();
+    }
+
+    function renderSlots() {
+      let h = '';
+      bookingState.slots.forEach(function(s, i) {
+        const active = i === bookingState.slotIdx;
+        h += '<div class="slot-btn' + (active ? ' active' : '') + '" onclick="selectSlot(' + i + ')">' + s + '</div>';
+      });
+      document.getElementById('bookingSlots').innerHTML = h;
+    }
+
+    function selectSlot(idx) {
+      bookingState.slotIdx = idx;
+      const btns = document.querySelectorAll('#bookingSlots .slot-btn');
+      btns.forEach(function(b, i) { b.classList.toggle('active', i === idx); });
+      validateBooking();
+    }
+
+    function validateBooking() {
+      const prenom = document.getElementById('bkPrenom').value.trim();
+      const nom = document.getElementById('bkNom').value.trim();
+      const email = document.getElementById('bkEmail').value.trim();
+      const dateOk = bookingState.dateIdx >= 0 && bookingState.slotIdx >= 0;
+      const formOk = prenom.length > 0 && nom.length > 0 && email.length > 0 && email.includes('@');
+      document.getElementById('bookingBtn').disabled = !(dateOk && formOk);
+    }
+
+    function reserverEtPayer() {
+      const prenom = document.getElementById('bkPrenom').value.trim();
+      const nom = document.getElementById('bkNom').value.trim();
+      const email = document.getElementById('bkEmail').value.trim();
+      const tel = document.getElementById('bkTel').value.trim();
+      const error = document.getElementById('bookingError');
+
+      if (!prenom || !nom || !email || !email.includes('@')) {
+        error.textContent = 'Veuillez remplir tous les champs obligatoires.';
+        error.style.display = 'block';
+        return;
+      }
+      error.style.display = 'none';
+
+      const d = bookingState.dates[bookingState.dateIdx];
+      const dateStr = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+      const slotStr = bookingState.slots[bookingState.slotIdx];
+
+      document.getElementById('bookingBtn').disabled = true;
+      document.getElementById('bookingBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+      document.getElementById('bookingSuccess').style.display = 'none';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '57de7660-0e73-44f6-afdf-e7d5266bf4f2',
+          subject: 'Nouvelle réservation écoute & soutien',
+          from_name: prenom + ' ' + nom,
+          email: email,
+          telephone: tel || 'Non renseigné',
+          message: 'Réservation pour le service Écoute & Soutien.\nDate: ' + dateStr + '\nCréneau: ' + slotStr + '\nPrénom: ' + prenom + '\nNom: ' + nom + '\nEmail: ' + email + '\nTéléphone: ' + (tel || 'Non renseigné')
+        })
+      }).then(function() {
+        document.getElementById('bookingSuccess').style.display = 'block';
+        setTimeout(function() {
+          window.open('https://buy.stripe.com/fZu3cxeeU6ls0ll1STasg03', '_blank');
+        }, 1500);
+      }).catch(function() {
+        document.getElementById('bookingBtn').disabled = false;
+        document.getElementById('bookingBtn').innerHTML = '<i class="fas fa-lock"></i> Réserver et payer 25 €';
+        error.textContent = 'Erreur d\'envoi. Réessaie ou utilise le bouton "Payer par carte".';
+        error.style.display = 'block';
+      });
     }
   </script>
 </body>
