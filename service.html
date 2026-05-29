@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joseph Moussallem — Détail du service</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">JM</a>
+      <ul class="nav-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#a-propos">À propos</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="service-detail">
+    <div class="container">
+      <a href="index.html#services" class="back-link"><i class="fas fa-arrow-left"></i> Retour aux services</a>
+      <div class="detail-card" id="detailCard"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Joseph Moussallem — Carte de visite numérique</p>
+    </div>
+  </footer>
+
+  <script>
+    const services = {
+      admin: {
+        icon: "fa-server",
+        title: "Administration Système & Réseaux",
+        desc: "Infrastructure Linux/Windows, virtualisation (Proxmox, VMware, Docker), sauvegarde, sécurité, déploiement automatisé.",
+        full: [
+          "Installation et administration de serveurs Linux (Debian, Ubuntu, CentOS) et Windows Server 2012-2022",
+          "Virtualisation avec Proxmox, VMware vSphere et conteneurs Docker",
+          "Gestion complète de parc informatique : inventaire, maintenance préventive et corrective",
+          "Solutions de sauvegarde et plan de reprise d'activité",
+          "Déploiement automatisé avec Ansible et FOG (imagerie réseau)",
+          "Supervision et monitoring (Nagios, Zabbix)",
+          "Migration de serveurs et optimisation des performances",
+          "Support utilisateurs de niveau 1 à 3"
+        ],
+        pourqui: "PME, associations, collectivités, établissements scolaires"
+      },
+      reseau: {
+        icon: "fa-network-wired",
+        title: "Réseaux & Sécurité",
+        desc: "Cisco CCNA, Mikrotik, pfSense, Fortinet. Architecture réseau, VPN, QoS, pare-feu, segmentation.",
+        full: [
+          "Architecture et déploiement de réseaux d'entreprise (Cisco, Mikrotik, Ubiquiti)",
+          "Configuration de pare-feu : pfSense, Fortinet, OPNsense",
+          "Mise en place de VPN site-à-site et accès distant (OpenVPN, WireGuard, IPsec)",
+          "Segmentation réseau (VLAN, sous-réseaux) et QoS",
+          "Audit de sécurité et recommandations",
+          "WiFi professionnel : couverture, contrôleurs, authentification",
+          "Supervision réseau avec SNMP, The Dude, PRTG"
+        ],
+        pourqui: "Entreprises, administrations, établissements multi-sites"
+      },
+      web: {
+        icon: "fa-laptop-code",
+        title: "Développement Web & Automatisation",
+        desc: "PHP, MySQL, WordPress, Joomla. Scripts PowerShell/Bash, Ansible, FOG pour déploiement réseau.",
+        full: [
+          "Création de sites vitrine et e-commerce sur mesure",
+          "Développement et maintenance WordPress, Joomla",
+          "Applications web PHP/MySQL",
+          "Automatisation de tâches avec scripts Bash et PowerShell",
+          "Déploiement d'images système avec FOG",
+          "Intégration et API REST",
+          "Optimisation des performances web"
+        ],
+        pourqui: "PME, associations, indépendants, collectivités"
+      },
+      av: {
+        icon: "fa-video",
+        title: "Audiovisuel & Streaming",
+        desc: "Captation, mixage live, streaming multi-plateforme avec OBS. Idéal pour conférences, cultes, événements.",
+        full: [
+          "Captation vidéo multi-caméras et mixage live",
+          "Streaming direct et différé vers YouTube, Facebook, Twitch",
+          "Configuration OBS Studio avancée : scènes, sources, transitions",
+          "Installation de régie audiovisuelle complète",
+          "Montage et post-production avec DaVinci Resolve",
+          "Sonorisation et mixage audio",
+          "Formation à l'utilisation des outils audiovisuels"
+        ],
+        pourqui: "Lieux de culte, associations, municipalités, entreprises"
+      },
+      social: {
+        icon: "fa-hands-helping",
+        title: "Accompagnement Social & Éducatif",
+        desc: "DEAES, BAFA, AFGSU2. Accompagnement de personnes en situation de handicap, perte d'autonomie ou difficultés sociales.",
+        full: [
+          "Accompagnement éducatif et social de personnes handicapées ou en perte d'autonomie",
+          "Aide à domicile et soutien dans les actes de la vie quotidienne",
+          "Animation de groupes et ateliers socio-éducatifs",
+          "Médiation interculturelle et lutte contre l'isolement",
+          "Suivi individualisé et projets personnalisés",
+          "Gestion de crise et accompagnement psychologique",
+          "Travail en équipe pluridisciplinaire"
+        ],
+        pourqui: "EHPAD, services d'aide à domicile, centres sociaux, associations"
+      },
+      formation: {
+        icon: "fa-chalkboard-teacher",
+        title: "Formation & Conseil",
+        desc: "Formation aux outils informatiques, bureautique, CMS. Sensibilisation à la sécurité et accompagnement au changement.",
+        full: [
+          "Formation individuelle ou en groupe aux outils informatiques",
+          "Initiation à WordPress, Joomla et gestion de contenu",
+          "Formation bureautique (Word, Excel, Outlook, LibreOffice)",
+          "Sensibilisation à la cybersécurité pour les équipes",
+          "Accompagnement au changement numérique",
+          "Conseil en infrastructure IT et choix technologiques",
+          "Audit et diagnostic des systèmes existants"
+        ],
+        pourqui: "Toute organisation souhaitant monter en compétence"
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('s') || 'admin';
+    const svc = services[slug];
+
+    if (svc) {
+      document.title = "Joseph Moussallem — " + svc.title;
+      let html = '<div class="detail-icon"><i class="fas ' + svc.icon + '"></i></div>';
+      html += '<h1>' + svc.title + '</h1>';
+      html += '<p class="detail-desc">' + svc.desc + '</p>';
+      html += '<h2>Prestations détaillées</h2><ul>';
+      svc.full.forEach(function(item) { html += '<li>' + item + '</li>'; });
+      html += '</ul>';
+      html += '<div class="detail-pourqui"><strong>Pour qui ?</strong> ' + svc.pourqui + '</div>';
+      html += '<a href="index.html#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> Demander un devis</a>';
+      document.getElementById('detailCard').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
