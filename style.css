@@ -197,6 +197,16 @@ body {
   gap: 0.4rem;
 }
 
+.hero-badges span {
+  cursor: pointer;
+}
+
+.hero-badges span:hover {
+  background: rgba(255,215,0,0.12);
+  border-color: #ffd700;
+  color: #fff;
+}
+
 .hero-badges i {
   color: #ffd700;
 }
@@ -206,6 +216,111 @@ body {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+.modal-overlay.active {
+  display: block;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #151515;
+  border: 1px solid rgba(255,215,0,0.15);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 520px;
+  width: 90%;
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal.active {
+  display: block;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #ffd700;
+}
+
+.modal-content h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 1rem;
+  padding-right: 2rem;
+}
+
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.modal-content ul li {
+  color: #ccc;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.modal-content ul li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.modal-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.modal-certs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.modal-certs span {
+  background: rgba(255,215,0,0.08);
+  border: 1px solid rgba(255,215,0,0.12);
+  color: #ddd;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
 }
 
 .btn-primary {
