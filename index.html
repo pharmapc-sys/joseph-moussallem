@@ -222,21 +222,22 @@
       <div class="contact-card">
         <h2>Travaillons ensemble</h2>
         <p>Disponible pour des missions IT, sociales, audiovisuelles ou de formation. Contactez-moi pour discuter de vos besoins.</p>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="57de7660-0e73-44f6-afdf-e7d5266bf4f2">
+          <input type="hidden" name="subject" value="Nouveau message depuis votre site carte de visite">
           <div class="form-row">
-            <input type="text" name="nom" placeholder="Nom" required>
-            <input type="text" name="prenom" placeholder="Prénom" required>
+            <input type="text" name="name" placeholder="Nom &amp; Prénom" required>
+            <input type="email" name="email" placeholder="Email" required>
           </div>
           <div class="form-row">
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="tel" name="telephone" placeholder="Téléphone">
+            <input type="tel" name="phone" placeholder="Téléphone">
+            <input type="text" name="sujet" placeholder="Sujet">
           </div>
           <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
-          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="from_name" value="Formulaire site carte de visite">
           <button type="submit" class="btn-primary btn-large">
             <i class="fas fa-paper-plane"></i> Envoyer le message
           </button>
-          <p class="form-status" id="formStatus"></p>
         </form>
         <div class="contact-methods">
           <a href="tel:+33783743183" class="contact-method">
@@ -267,44 +268,7 @@
     </div>
   </footer>
 
-<script>
-  document.getElementById('contactForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const status = document.getElementById('formStatus');
-    const btn = this.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
-    status.textContent = '';
-    status.className = 'form-status';
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: '57de7660-0e73-44f6-afdf-e7d5266bf4f2',
-          subject: 'Nouveau message depuis votre site carte de visite',
-          from_name: this.querySelector('input[name="prenom"]').value + ' ' + this.querySelector('input[name="nom"]').value,
-          email: this.querySelector('input[name="email"]').value,
-          phone: this.querySelector('input[name="telephone"]').value,
-          message: this.querySelector('textarea').value
-        })
-      });
-      if (res.ok) {
-        status.textContent = '✅ Message envoyé ! Je vous répondrai rapidement.';
-        status.className = 'form-status success';
-        this.reset();
-      } else {
-        status.textContent = '❌ Erreur lors de l\'envoi. Réessayez ou envoyez directement un email.';
-        status.className = 'form-status error';
-      }
-    } catch {
-      status.textContent = '❌ Erreur réseau. Envoyez un email à joseph@moussallem.fr';
-      status.className = 'form-status error';
-    }
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer le message';
-  });
-</script>
+
 
 </body>
 </html>
