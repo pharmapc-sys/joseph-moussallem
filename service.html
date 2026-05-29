@@ -198,42 +198,6 @@
     const slug = params.get('s') || 'admin';
     const svc = services[slug];
 
-    if (svc) {
-      document.title = "Joseph Moussallem — " + svc.title;
-      let html = '<div class="detail-icon"><i class="fas ' + svc.icon + '"></i></div>';
-      html += '<h1>' + svc.title + '</h1>';
-      html += '<p class="detail-desc">' + svc.desc + '</p>';
-      html += '<h2>Prestations détaillées</h2><ul>';
-      svc.full.forEach(function(item) { html += '<li>' + item + '</li>'; });
-      html += '</ul>';
-      html += '<div class="detail-pourqui"><strong>Pour qui ?</strong> ' + svc.pourqui + '</div>';
-      html += '<a href="index.html#contact" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-paper-plane"></i> Demander un devis</a>';
-
-      if (slug === 'ecoute') {
-        html += '<div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;"><a href="https://buy.stripe.com/fZu3cxeeU6ls0ll1STasg03" class="btn-primary" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-credit-card"></i> Payer par carte</a></div>';
-
-        html += '<div class="booking-divider"></div>';
-        html += '<div class="booking-title"><i class="fas fa-calendar-alt"></i> Réserver une session d\'écoute</div>';
-        html += '<div style="color:#888;font-size:0.9rem;margin-bottom:1rem;">Sélectionne une date et un créneau, puis remplis le formulaire.</div>';
-
-        html += '<div class="booking-dates" id="bookingDates"></div>';
-        html += '<div class="booking-slots" id="bookingSlots"></div>';
-
-        html += '<div class="booking-form">';
-        html += '<input type="text" id="bkPrenom" placeholder="Prénom *" oninput="validateBooking()">';
-        html += '<input type="text" id="bkNom" placeholder="Nom *" oninput="validateBooking()">';
-        html += '<input type="email" id="bkEmail" placeholder="Email *" oninput="validateBooking()">';
-        html += '<input type="tel" id="bkTel" placeholder="Téléphone (optionnel)">';
-        html += '<div class="booking-error" id="bookingError"></div>';
-        html += '<button class="booking-btn" id="bookingBtn" onclick="reserverEtPayer()" disabled><i class="fas fa-lock"></i> Réserver et payer 25 €</button>';
-        html += '<div class="booking-success" id="bookingSuccess"><i class="fas fa-check-circle"></i> Réservation envoyée ! Redirection vers le paiement...</div>';
-        html += '</div>';
-      }
-      document.getElementById('detailCard').innerHTML = html;
-
-      if (slug === 'ecoute') initBooking();
-    }
-
     let bookingState = { dateIdx: -1, slotIdx: -1, dates: [], slots: [] };
 
     function initBooking() {
@@ -343,6 +307,42 @@
         error.textContent = 'Erreur d\'envoi. Réessaie ou utilise le bouton "Payer par carte".';
         error.style.display = 'block';
       });
+    }
+
+    if (svc) {
+      document.title = "Joseph Moussallem — " + svc.title;
+      let html = '<div class="detail-icon"><i class="fas ' + svc.icon + '"></i></div>';
+      html += '<h1>' + svc.title + '</h1>';
+      html += '<p class="detail-desc">' + svc.desc + '</p>';
+      html += '<h2>Prestations détaillées</h2><ul>';
+      svc.full.forEach(function(item) { html += '<li>' + item + '</li>'; });
+      html += '</ul>';
+      html += '<div class="detail-pourqui"><strong>Pour qui ?</strong> ' + svc.pourqui + '</div>';
+      html += '<a href="index.html#contact" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-paper-plane"></i> Demander un devis</a>';
+
+      if (slug === 'ecoute') {
+        html += '<div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;"><a href="https://buy.stripe.com/fZu3cxeeU6ls0ll1STasg03" class="btn-primary" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;background:#ffd700;color:#0a0a0a;padding:0.85rem 2rem;border-radius:50px;font-weight:700;font-size:1rem;"><i class="fas fa-credit-card"></i> Payer par carte</a></div>';
+
+        html += '<div class="booking-divider"></div>';
+        html += '<div class="booking-title"><i class="fas fa-calendar-alt"></i> Réserver une session d\'écoute</div>';
+        html += '<div style="color:#888;font-size:0.9rem;margin-bottom:1rem;">Sélectionne une date et un créneau, puis remplis le formulaire.</div>';
+
+        html += '<div class="booking-dates" id="bookingDates"></div>';
+        html += '<div class="booking-slots" id="bookingSlots"></div>';
+
+        html += '<div class="booking-form">';
+        html += '<input type="text" id="bkPrenom" placeholder="Prénom *" oninput="validateBooking()">';
+        html += '<input type="text" id="bkNom" placeholder="Nom *" oninput="validateBooking()">';
+        html += '<input type="email" id="bkEmail" placeholder="Email *" oninput="validateBooking()">';
+        html += '<input type="tel" id="bkTel" placeholder="Téléphone (optionnel)">';
+        html += '<div class="booking-error" id="bookingError"></div>';
+        html += '<button class="booking-btn" id="bookingBtn" onclick="reserverEtPayer()" disabled><i class="fas fa-lock"></i> Réserver et payer 25 €</button>';
+        html += '<div class="booking-success" id="bookingSuccess"><i class="fas fa-check-circle"></i> Réservation envoyée ! Redirection vers le paiement...</div>';
+        html += '</div>';
+      }
+      document.getElementById('detailCard').innerHTML = html;
+
+      if (slug === 'ecoute') initBooking();
     }
   </script>
 </body>
