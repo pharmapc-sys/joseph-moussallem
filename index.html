@@ -225,15 +225,22 @@
         <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
           <input type="hidden" name="access_key" value="57de7660-0e73-44f6-afdf-e7d5266bf4f2">
           <input type="hidden" name="subject" value="Nouveau message depuis votre site carte de visite">
-          <div class="form-row">
+          <input type="hidden" name="redirect" value="https://pharmapc-sys.github.io/joseph-moussallem/#contact">
+          <div class="form-group">
             <input type="text" name="name" placeholder="Nom &amp; Prénom" required>
-            <input type="email" name="email" placeholder="Email" required>
           </div>
-          <div class="form-row">
-            <input type="tel" name="phone" placeholder="Téléphone">
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Adresse email" required>
+          </div>
+          <div class="form-group">
+            <input type="tel" name="phone" placeholder="Téléphone (optionnel)">
+          </div>
+          <div class="form-group">
             <input type="text" name="sujet" placeholder="Sujet">
           </div>
-          <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
+          <div class="form-group">
+            <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
+          </div>
           <input type="hidden" name="from_name" value="Formulaire site carte de visite">
           <button type="submit" class="btn-primary btn-large">
             <i class="fas fa-paper-plane"></i> Envoyer le message

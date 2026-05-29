@@ -559,60 +559,44 @@ body {
   text-align: left;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+.form-group {
   margin-bottom: 1rem;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 0.85rem 1.2rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,215,0,0.12);
+  padding: 1rem 1.2rem;
+  background: #1a1a1a;
+  border: 1px solid #333;
   border-radius: 12px;
   color: #fff;
   font-size: 0.95rem;
   font-family: inherit;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: #ffd700;
+  box-shadow: 0 0 0 3px rgba(255,215,0,0.08);
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: #666;
+  color: #555;
 }
 
 .contact-form textarea {
   resize: vertical;
-  margin-bottom: 1rem;
+  min-height: 120px;
 }
 
 .contact-form .btn-large {
   width: 100%;
   justify-content: center;
-}
-
-.form-status {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  text-align: center;
-  min-height: 1.5rem;
-}
-
-.form-status.success {
-  color: #4ade80;
-}
-
-.form-status.error {
-  color: #f87171;
+  margin-top: 0.5rem;
 }
 
 .contact-methods {
