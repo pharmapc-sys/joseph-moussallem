@@ -406,7 +406,7 @@
     html += '<ul>';
     data.items.forEach(function(item) { html += '<li>' + item + '</li>'; });
     html += '</ul>';
-    if (data.certs.length > 0) {
+    if (data.certs && data.certs.length > 0) {
       html += '<h3>Certifications</h3><div class="modal-certs">';
       data.certs.forEach(function(c) { html += '<span>' + c + '</span>'; });
       html += '</div>';
