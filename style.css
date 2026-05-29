@@ -532,11 +532,11 @@ body {
 }
 
 .contact-card {
-  max-width: 700px;
+  max-width: 640px;
   margin: 0 auto;
   background: #111;
   border-radius: 24px;
-  padding: 3rem;
+  padding: 2.5rem;
   text-align: center;
   border: 1px solid rgba(255,215,0,0.1);
 }
@@ -554,20 +554,22 @@ body {
   font-size: 1rem;
 }
 
-.contact-form {
-  margin-bottom: 2rem;
+.contact-card form {
   text-align: left;
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-row .form-group {
+  width: 50%;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
@@ -578,41 +580,42 @@ body {
   margin-bottom: 0.4rem;
 }
 
-.contact-form input,
-.contact-form textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
-  padding: 0.85rem 1.1rem;
+  padding: 0.75rem 1rem;
   background: #1a1a1a;
-  border: 2px solid #2a2a2a;
-  border-radius: 10px;
+  border: 2px solid #333;
+  border-radius: 8px;
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   border-color: #ffd700;
   box-shadow: 0 0 0 3px rgba(255,215,0,0.08);
 }
 
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
+.form-group input::placeholder,
+.form-group textarea::placeholder {
   color: #555;
 }
 
-.contact-form textarea {
+.form-group textarea {
   resize: vertical;
   min-height: 120px;
 }
 
+.empty-feedback,
 .invalid-feedback {
   display: none;
   color: #f87171;
   font-size: 0.8rem;
-  margin-top: 0.3rem;
+  margin-top: 0.25rem;
 }
 
 .was-validated .form-group input:invalid,
@@ -621,7 +624,9 @@ body {
 }
 
 .was-validated .form-group input:invalid ~ .invalid-feedback,
-.was-validated .form-group textarea:invalid ~ .invalid-feedback {
+.was-validated .form-group input:invalid ~ .empty-feedback,
+.was-validated .form-group textarea:invalid ~ .invalid-feedback,
+.was-validated .form-group textarea:invalid ~ .empty-feedback {
   display: block;
 }
 
@@ -630,12 +635,23 @@ body {
   border-color: #4ade80;
 }
 
-.contact-form .btn-large {
+.submit-btn {
   width: 100%;
-  justify-content: center;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  font-size: 1.05rem;
+  padding: 0.9rem;
+  background: #ffd700;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.submit-btn:hover {
+  background: #fff;
+  transform: translateY(-1px);
 }
 
 .form-result {
@@ -643,6 +659,7 @@ body {
   text-align: center;
   font-size: 0.9rem;
   font-weight: 500;
+  min-height: 1.5rem;
 }
 
 .form-result.success {
@@ -762,6 +779,15 @@ body {
 
   .contact-card {
     padding: 2rem 1.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-row .form-group {
+    width: 100%;
   }
 
   .gallery-grid {

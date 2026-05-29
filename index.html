@@ -222,43 +222,46 @@
       <div class="contact-card">
         <h2>Travaillons ensemble</h2>
         <p>Disponible pour des missions IT, sociales, audiovisuelles ou de formation. Contactez-moi pour discuter de vos besoins.</p>
-        <form class="contact-form needs-validation" action="https://api.web3forms.com/submit" method="POST" id="form" novalidate>
+        <form action="https://api.web3forms.com/submit" method="POST" id="form" class="needs-validation" novalidate>
           <input type="hidden" name="access_key" value="57de7660-0e73-44f6-afdf-e7d5266bf4f2">
           <input type="hidden" name="subject" value="Nouveau message depuis votre site carte de visite">
           <input type="checkbox" name="botcheck" style="display:none">
 
           <div class="form-row">
             <div class="form-group">
-              <label for="name">Nom &amp; Prénom</label>
-              <input type="text" name="name" id="name" placeholder="Votre nom" required>
-              <div class="invalid-feedback">Veuillez entrer votre nom.</div>
+              <label for="fname">Prénom</label>
+              <input type="text" name="fname" id="fname" placeholder="Joseph" required>
+              <div class="empty-feedback invalid-feedback">Veuillez entrer votre prénom.</div>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" name="email" id="email" placeholder="vous@email.com" required>
-              <div class="invalid-feedback">Veuillez entrer un email valide.</div>
+              <label for="lname">Nom</label>
+              <input type="text" name="lname" id="lname" placeholder="Moussallem" required>
+              <div class="empty-feedback invalid-feedback">Veuillez entrer votre nom.</div>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="phone">Téléphone</label>
-              <input type="tel" name="phone" id="phone" placeholder="07 XX XX XX XX">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" placeholder="vous@email.com" required>
+              <div class="empty-feedback text-red-400 text-sm mt-1">Veuillez entrer votre email.</div>
+              <div class="invalid-feedback text-red-400 text-sm mt-1">Email invalide.</div>
             </div>
             <div class="form-group">
-              <label for="sujet">Sujet</label>
-              <input type="text" name="sujet" id="sujet" placeholder="Sujet de votre message">
+              <label for="phone">Téléphone</label>
+              <input type="text" name="phone" id="phone" placeholder="07 XX XX XX XX">
+              <div class="empty-feedback invalid-feedback">Veuillez entrer votre téléphone.</div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea name="message" id="message" rows="5" placeholder="Votre message..." required></textarea>
-            <div class="invalid-feedback">Veuillez entrer votre message.</div>
+            <textarea rows="5" name="message" id="message" placeholder="Votre message..." required></textarea>
+            <div class="empty-feedback invalid-feedback">Veuillez entrer votre message.</div>
           </div>
 
-          <button type="submit" class="btn-primary btn-large">
-            <i class="fas fa-paper-plane"></i> Envoyer le message
+          <button type="submit" class="submit-btn">
+            Envoyer le message
           </button>
           <p class="form-result" id="result"></p>
         </form>
